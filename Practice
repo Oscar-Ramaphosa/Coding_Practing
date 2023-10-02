@@ -1,0 +1,91 @@
+//the five below functions are functions for the combobox column selection on the permission DataGridView.
+        //column 1 and 2 must affect each other and column 2 and 3 must affect each other.
+        private void permissionDataGrid_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (e.Control is ComboBox)
+            {
+                ComboBox comboBox = (ComboBox)e.Control;
+                int columnIndex = permissionDataGrid.CurrentCell.ColumnIndex;
+                if (columnIndex == 0)
+                {
+                    comboBox.SelectionChangeCommitted -= new EventHandler(ComboBox_SelectionChangeCommitted_First);
+                    comboBox.SelectionChangeCommitted += new EventHandler(ComboBox_SelectionChangeCommitted_First);
+                }
+                else if (columnIndex == 1)
+                {
+                    comboBox.SelectionChangeCommitted -= new EventHandler(ComboBox_SelectionChangeCommitted_Second);
+                    comboBox.SelectionChangeCommitted += new EventHandler(ComboBox_SelectionChangeCommitted_Second);
+                }
+                else if (columnIndex == 2)
+                {
+                    comboBox.SelectionChangeCommitted -= new EventHandler(ComboBox_SelectionChangeCommitted_Third);
+                    comboBox.SelectionChangeCommitted += new EventHandler(ComboBox_SelectionChangeCommitted_Third);
+                }
+                else if (columnIndex == 3)
+                {
+                    comboBox.SelectionChangeCommitted -= new EventHandler(ComboBox_SelectionChangeCommitted_Fourth);
+                    comboBox.SelectionChangeCommitted += new EventHandler(ComboBox_SelectionChangeCommitted_Fourth);
+                }
+            }
+        }
+
+        //column 0 must deselect column 1 
+        private void ComboBox_SelectionChangeCommitted_First(object sender, EventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            if (comboBox.SelectedValue != null)
+            {
+                DataGridViewRow currentRow = permissionDataGrid.CurrentRow;
+                if (permissionDataGrid.CurrentCell.ColumnIndex == 0)
+                {
+                    DataGridViewComboBoxCell secondComboBox = (DataGridViewComboBoxCell)currentRow.Cells[1];
+                    secondComboBox.Value = DBNull.Value;
+                }
+            }
+        }
+
+        //column 1 must deselect column 0 
+        private void ComboBox_SelectionChangeCommitted_Second(object sender, EventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            if (comboBox.SelectedValue != null)
+            {
+                DataGridViewRow currentRow = permissionDataGrid.CurrentRow;
+                if (permissionDataGrid.CurrentCell.ColumnIndex == 1)
+                {
+                    DataGridViewComboBoxCell firstComboBox = (DataGridViewComboBoxCell)currentRow.Cells[0];
+                    firstComboBox.Value = DBNull.Value;
+                }
+            }
+        }
+
+        //column 2 must deselect column 3 
+        private void ComboBox_SelectionChangeCommitted_Third(object sender, EventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            if (comboBox.SelectedValue != null)
+            {
+                DataGridViewRow currentRow = permissionDataGrid.CurrentRow;
+                if (permissionDataGrid.CurrentCell.ColumnIndex == 2)
+                {
+                    DataGridViewComboBoxCell secondComboBox = (DataGridViewComboBoxCell)currentRow.Cells[3];
+                    secondComboBox.Value = DBNull.Value;
+                }
+            }
+        }
+
+        //column 3 must deselect column 2 
+        private void ComboBox_SelectionChangeCommitted_Fourth(object sender, EventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            if (comboBox.SelectedValue != null)
+            {
+                DataGridViewRow currentRow = permissionDataGrid.CurrentRow;
+                if (permissionDataGrid.CurrentCell.ColumnIndex == 3)
+                {
+                    DataGridViewComboBoxCell secondComboBox = (DataGridViewComboBoxCell)currentRow.Cells[2];
+                    secondComboBox.Value = DBNull.Value;
+                }
+            }
+        }
+
